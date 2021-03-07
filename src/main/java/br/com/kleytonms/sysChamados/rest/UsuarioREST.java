@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import br.com.kleytonms.sysChamados.entidades.Usuario;
+import br.com.kleytonms.sysChamados.exceptions.DBException;
 import br.com.kleytonms.sysChamados.servicos.UsuarioService;
 
 @Path("usuario")
@@ -22,16 +23,21 @@ public class UsuarioREST {
 	@GET
 	@Produces(value = MediaType.APPLICATION_JSON)
 	public Response listar() {
-		return Response.ok(usuarioService.listar()).build();
+		try {
+			return Response.ok(usuarioService.listarTodos()).build();
+		} catch (DBException e) {
+			return Response.status(500).build();
+			
+		}
 	}
 	
 	@POST
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	public Response criar(Usuario usuario) {
 		try {
-			usuarioService.criar(usuario);
+			usuarioService.criaOuAtualiza(usuario);
 			return Response.status(201).build();
-		} catch (Exception e) {
+		} catch (Exception | DBException e) {
 			return Response.status(500).build();
 		}
 		

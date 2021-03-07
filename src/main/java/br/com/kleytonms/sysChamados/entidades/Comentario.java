@@ -3,24 +3,30 @@ package br.com.kleytonms.sysChamados.entidades;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Comentario {
+public class Comentario extends BaseEntity{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private Chamado chamado;
 	
 	private String detalhe;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private Usuario usuario;
 	
 	private LocalDateTime inclusao;
@@ -57,8 +63,13 @@ public class Comentario {
 		this.inclusao = inclusao;
 	}
 
-	public int getId() {
+	@Override
+	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	

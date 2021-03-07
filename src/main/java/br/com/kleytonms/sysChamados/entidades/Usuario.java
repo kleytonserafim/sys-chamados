@@ -1,19 +1,21 @@
 package br.com.kleytonms.sysChamados.entidades;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
-public class Usuario {
+public class Usuario extends BaseEntity{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1146295637220971679L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
 	private String usuario;
 	
@@ -23,18 +25,6 @@ public class Usuario {
 	
 	private String email;
 	
-	@OneToMany(mappedBy = "usuario")
-	private List<Chamado> chamados;
-	
-	public List<Chamado> getChamados() {
-		return chamados;
-	}
-	public void setChamados(List<Chamado> chamados) {
-		this.chamados = chamados;
-	}
-	public int getId() {
-		return id;
-	}
 	public String getUsuario() {
 		return usuario;
 	}
@@ -59,25 +49,13 @@ public class Usuario {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		return result;
+	public Long getId() {
+		return this.id;
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		if (id != other.id)
-			return false;
-		return true;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }

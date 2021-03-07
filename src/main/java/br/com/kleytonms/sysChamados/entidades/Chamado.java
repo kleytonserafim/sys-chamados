@@ -1,11 +1,13 @@
 package br.com.kleytonms.sysChamados.entidades;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,11 +17,16 @@ import javax.persistence.OneToMany;
 import br.com.kleytonms.sysChamados.enums.Status;
 
 @Entity
-public class Chamado {
+public class Chamado extends BaseEntity{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -945306287075629422L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
 	private String titulo;
 	
@@ -29,14 +36,11 @@ public class Chamado {
 	
 	private LocalDateTime conclusao;
 	
-	@ManyToOne
-	private Usuario usuario;
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Usuario usuarioCriador;
 	
 	@Enumerated(EnumType.STRING)
 	private Status status;
-	
-	@OneToMany(mappedBy = "chamado")
-	private List<Comentario> comentarios;
 
 	public String getTitulo() {
 		return titulo;
@@ -70,6 +74,14 @@ public class Chamado {
 		this.conclusao = conclusao;
 	}
 
+	public Usuario getUsuarioCriador() {
+		return usuarioCriador;
+	}
+
+	public void setUsuarioCriador(Usuario usuarioCriador) {
+		this.usuarioCriador = usuarioCriador;
+	}
+
 	public Status getStatus() {
 		return status;
 	}
@@ -78,16 +90,12 @@ public class Chamado {
 		this.status = status;
 	}
 
-	public List<Comentario> getComentarios() {
-		return comentarios;
+	public Long getId() {
+		return this.id;
 	}
 
-	public void setComentarios(List<Comentario> comentarios) {
-		this.comentarios = comentarios;
-	}
-
-	public int getId() {
-		return id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	
