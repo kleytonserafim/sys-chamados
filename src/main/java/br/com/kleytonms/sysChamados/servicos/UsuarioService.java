@@ -20,10 +20,17 @@ public class UsuarioService {
 		return usuarioDAO.createOrUpdate(usuario);
 		
 	}
+	
+	public void apaga(Long id) throws DBException {
+		usuarioDAO.delete(id);
+	}
 
 	public List<Usuario> listarTodos() throws DBException {
-		// TODO Auto-generated method stub
-		return usuarioDAO.findAll();
+		List<Usuario> usuarios = usuarioDAO.findAll();
+		
+		
+		
+		return usuarios;
 	}
 
 }

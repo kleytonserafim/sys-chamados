@@ -4,13 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Usuario extends BaseEntity{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1146295637220971679L;
 
 	@Id
@@ -25,6 +27,15 @@ public class Usuario extends BaseEntity{
 	
 	private String email;
 	
+//	@XmlTransient
+//	@OneToMany(mappedBy = "usuarioCriador", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+//	private Set<Chamado> chamados = new HashSet<Chamado>();
+	
+	
+	
+//	public Usuario() {
+//		
+//	}
 	public String getUsuario() {
 		return usuario;
 	}
@@ -50,6 +61,13 @@ public class Usuario extends BaseEntity{
 		this.email = email;
 	}
 	
+	
+//	public Set<Chamado> getChamados() {
+//		return chamados;
+//	}
+//	public void setChamados(Set<Chamado> chamados) {
+//		this.chamados = chamados;
+//	}
 	@Override
 	public Long getId() {
 		return this.id;

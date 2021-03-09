@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.com.kleytonms.sysChamados.daos.ChamadoDAO;
 import br.com.kleytonms.sysChamados.daos.ComentarioDAO;
 import br.com.kleytonms.sysChamados.entidades.Comentario;
 import br.com.kleytonms.sysChamados.exceptions.DBException;

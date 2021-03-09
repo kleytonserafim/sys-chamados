@@ -1,8 +1,6 @@
 package br.com.kleytonms.sysChamados.entidades;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,11 +10,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import br.com.kleytonms.sysChamados.enums.Status;
 
 @Entity
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Chamado extends BaseEntity{
 
 	/**
@@ -41,6 +43,15 @@ public class Chamado extends BaseEntity{
 	
 	@Enumerated(EnumType.STRING)
 	private Status status;
+	
+//	@XmlTransient
+//	@OneToMany(mappedBy = "chamado", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+//	private Set<Comentario> comentarios = new HashSet<Comentario>();
+
+	
+	
+//	public Chamado() {
+//	}
 
 	public String getTitulo() {
 		return titulo;
@@ -89,6 +100,14 @@ public class Chamado extends BaseEntity{
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+
+//	public Set<Comentario> getComentarios() {
+//		return comentarios;
+//	}
+//
+//	public void setComentarios(Set<Comentario> comentarios) {
+//		this.comentarios = comentarios;
+//	}
 
 	public Long getId() {
 		return this.id;
