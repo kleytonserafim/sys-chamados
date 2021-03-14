@@ -1,13 +1,15 @@
 package br.com.kleytonms.sysChamados.dtos;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-import br.com.kleytonms.sysChamados.entidades.Comentario;
-import br.com.kleytonms.sysChamados.entidades.Usuario;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import br.com.kleytonms.sysChamados.entidades.Chamado;
 import br.com.kleytonms.sysChamados.enums.Status;
 
+@JsonInclude(value = Include.NON_NULL)
 public class ChamadoDTO {
 
 	private Long id;
@@ -20,28 +22,26 @@ public class ChamadoDTO {
 	
 	private LocalDateTime conclusao;
 	
-	private Usuario usuarioNome;
+	private UsuarioDTO usuarioCriador;
 	
 	private Status status;
 	
-	private Set<Comentario> comentarios = new HashSet<Comentario>();
+	private List<ComentarioDTO> comentarios;
 
 	public ChamadoDTO(Long id, String titulo, String descricao, LocalDateTime inclusao, LocalDateTime conclusao,
-			Usuario usuarioNome, Status status) {
+			UsuarioDTO usuarioCriador, Status status) {
 		this.id = id;
 		this.titulo = titulo;
 		this.descricao = descricao;
 		this.inclusao = inclusao;
 		this.conclusao = conclusao;
-		this.usuarioNome = usuarioNome;
+		this.usuarioCriador = usuarioCriador;
 		this.status = status;
 	}
 	
 	public ChamadoDTO() {
 		super();
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -83,12 +83,12 @@ public class ChamadoDTO {
 		this.conclusao = conclusao;
 	}
 
-	public Usuario getUsuarioNome() {
-		return usuarioNome;
+	public UsuarioDTO getUsuarioCriador() {
+		return usuarioCriador;
 	}
 
-	public void setUsuarioNome(Usuario usuarioNome) {
-		this.usuarioNome = usuarioNome;
+	public void setUsuarioCriador(UsuarioDTO usuarioNome) {
+		this.usuarioCriador = usuarioNome;
 	}
 
 	public Status getStatus() {
@@ -99,15 +99,38 @@ public class ChamadoDTO {
 		this.status = status;
 	}
 
-	public Set<Comentario> getComentarios() {
+	public List<ComentarioDTO> getComentarios() {
 		return comentarios;
 	}
 
-	public void setComentarios(Set<Comentario> comentarios) {
+	public void setComentarios(List<ComentarioDTO> comentarios) {
 		this.comentarios = comentarios;
 	}
 	
+	public ChamadoDTO(Chamado chamado){
+		this.id = chamado.getId();
+		this.titulo = chamado.getTitulo();
+		this.descricao = chamado.getDescricao();
+		this.inclusao = chamado.getInclusao();
+		this.conclusao = chamado.getConclusao();
+		this.usuarioCriador = new UsuarioDTO(chamado.getUsuarioCriador());
+		this.status = chamado.getStatus();
+	}
 	
+	public Chamado convertToEntity() {
+		Chamado chamado = new Chamado();
+		
+		if(this.id != null) chamado.setId(this.id);
+		if(this.titulo != null) chamado.setTitulo(this.titulo);
+		if(this.descricao != null) chamado.setDescricao(this.descricao);
+		if(this.inclusao != null) chamado.setInclusao(this.inclusao);
+		if(this.conclusao != null) chamado.setConclusao(this.conclusao);
+		if(this.usuarioCriador != null) chamado.setUsuarioCriador(this.usuarioCriador.convertToEntity());
+		if(this.status != null) chamado.setStatus(this.status);
+		
+		
+		return chamado;
+	}
 	
 	
 }

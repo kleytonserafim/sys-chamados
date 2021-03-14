@@ -7,13 +7,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import br.com.kleytonms.sysChamados.entidades.BaseEntity;
 import br.com.kleytonms.sysChamados.exceptions.DBException;
 
-@Transactional
 public abstract class GenericDAO<T extends BaseEntity, I extends Serializable> implements Serializable{
 
 	/**

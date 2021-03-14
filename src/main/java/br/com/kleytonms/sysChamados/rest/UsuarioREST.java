@@ -14,8 +14,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
-import br.com.kleytonms.sysChamados.entidades.Usuario;
+import br.com.kleytonms.sysChamados.anotacoes.JWTTokenNeeded;
+import br.com.kleytonms.sysChamados.dtos.UsuarioDTO;
 import br.com.kleytonms.sysChamados.exceptions.DBException;
 import br.com.kleytonms.sysChamados.servicos.UsuarioService;
 
@@ -28,20 +30,22 @@ public class UsuarioREST {
 	
 	@GET
 	@Produces(value = MediaType.APPLICATION_JSON)
+	@JWTTokenNeeded
 	public Response listar() {
 		try {
-			List<Usuario> usuarios = usuarioService.listarTodos();
+			List<UsuarioDTO> usuarios = usuarioService.listarTodos();
 		
 			return Response.ok(usuarios).build();
 		} catch (DBException e) {
-			return Response.status(500).build();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 			
 		}
 	}
 	
 	@POST
 	@Consumes(value = MediaType.APPLICATION_JSON)
-	public Response criar(Usuario usuario) {
+	@JWTTokenNeeded
+	public Response criar(UsuarioDTO usuario) {
 		try {
 			usuarioService.criaOuAtualiza(usuario);
 			return Response.status(201).build();
@@ -51,11 +55,16 @@ public class UsuarioREST {
 	}
 	
 	@PUT
+	@Path("/{id}")
 	@Consumes(value = MediaType.APPLICATION_JSON)
 	@Produces(value = MediaType.APPLICATION_JSON)
-	public Response atualiza(Usuario usuario) {
+	@JWTTokenNeeded
+	public Response atualiza(UsuarioDTO usuario, @PathParam(value = "id") Long id) {
 		try {
-			return Response.ok(usuarioService.criaOuAtualiza(usuario)).build();
+			usuario.setId(id);
+			UsuarioDTO usuarioUpToDate = usuarioService.criaOuAtualiza(usuario);
+			usuarioUpToDate.setSenha(null);
+			return Response.ok(usuarioUpToDate).build();
 		} catch (DBException e) {
 			return Response.status(500).build();
 		}
@@ -63,6 +72,7 @@ public class UsuarioREST {
 	
 	@DELETE
 	@Path("{id}")
+	@JWTTokenNeeded
 	public Response apaga(@PathParam(value = "id") Long id) {
 		
 		try {

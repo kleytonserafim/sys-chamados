@@ -2,6 +2,7 @@ package br.com.kleytonms.sysChamados.entidades;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,11 +30,13 @@ public class Comentario extends BaseEntity{
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Chamado chamado;
 	
+	@Column(nullable = false)
 	private String detalhe;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Usuario usuario;
 	
+	@Column(nullable = false)
 	private LocalDateTime inclusao;
 
 	
@@ -80,6 +83,12 @@ public class Comentario extends BaseEntity{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Comentario [id=" + id + ", chamado=" + chamado + ", detalhe=" + detalhe + ", usuario=" + usuario
+				+ ", inclusao=" + inclusao + "]";
 	}
 	
 	

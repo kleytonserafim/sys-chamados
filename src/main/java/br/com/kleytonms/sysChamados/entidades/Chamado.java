@@ -1,7 +1,12 @@
 package br.com.kleytonms.sysChamados.entidades;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,15 +15,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.OneToMany;
 
 import br.com.kleytonms.sysChamados.enums.Status;
 
 @Entity
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Chamado extends BaseEntity{
 
 	/**
@@ -30,28 +31,30 @@ public class Chamado extends BaseEntity{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(nullable = false)
 	private String titulo;
 	
+	@Column(nullable = false)
 	private String descricao;
 	
+	@Column(nullable = false)
 	private LocalDateTime inclusao;
 	
+	@Column(nullable = false)
 	private LocalDateTime conclusao;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Usuario usuarioCriador;
 	
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private Status status;
 	
-//	@XmlTransient
-//	@OneToMany(mappedBy = "chamado", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-//	private Set<Comentario> comentarios = new HashSet<Comentario>();
-
+	@OneToMany(mappedBy = "chamado", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@JsonbTransient
+	private List<Comentario> comentarios = new ArrayList<Comentario>();
 	
 	
-//	public Chamado() {
-//	}
 
 	public String getTitulo() {
 		return titulo;
@@ -101,13 +104,13 @@ public class Chamado extends BaseEntity{
 		this.status = status;
 	}
 
-//	public Set<Comentario> getComentarios() {
-//		return comentarios;
-//	}
-//
-//	public void setComentarios(Set<Comentario> comentarios) {
-//		this.comentarios = comentarios;
-//	}
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
 
 	public Long getId() {
 		return this.id;
@@ -115,6 +118,13 @@ public class Chamado extends BaseEntity{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Chamado [id=" + id + ", titulo=" + titulo + ", descricao=" + descricao + ", inclusao=" + inclusao
+				+ ", conclusao=" + conclusao + ", usuarioCriador=" + usuarioCriador + ", status=" + status
+				+ ", comentarios=" + comentarios + "]";
 	}
 	
 	
