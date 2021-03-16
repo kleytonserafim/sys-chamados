@@ -40,7 +40,7 @@ public class Chamado extends BaseEntity{
 	@Column(nullable = false)
 	private LocalDateTime inclusao;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private LocalDateTime conclusao;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

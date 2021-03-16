@@ -41,7 +41,6 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
 		
 
 		try {
-			System.out.println("asfdas");
 			subject = claims.getBody().getSubject();
 		} catch (final JwtException e) {
 			

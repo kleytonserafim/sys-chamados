@@ -29,7 +29,10 @@ public class UsuarioService {
 	}
 	
 	public UsuarioDTO criaOuAtualiza(UsuarioDTO usuario) throws DBException {
-		return new UsuarioDTO(usuarioDAO.createOrUpdate(usuario.convertToEntity()));
+		Usuario entity = usuario.convertToEntity();
+		if(usuario.getId() != null) entity.setSenha(usuarioDAO.find(usuario.getId()).getSenha());
+		
+		return new UsuarioDTO(usuarioDAO.createOrUpdate(entity));
 	}
 	
 	public void apaga(Long id) throws DBException {
@@ -46,6 +49,11 @@ public class UsuarioService {
 			dtos.add(new UsuarioDTO(usuario.getId(), usuario.getUsuario(),usuario.getNome(), usuario.getEmail(), usuario.getChamados()));
 		}
 		return dtos;
+	}
+
+	public UsuarioDTO findByLogin(String login) {
+		
+		return new UsuarioDTO(usuarioDAO.getUsuarioPorLogin(login));
 	}
 
 }

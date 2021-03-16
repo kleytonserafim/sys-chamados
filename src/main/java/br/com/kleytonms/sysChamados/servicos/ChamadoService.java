@@ -1,6 +1,7 @@
 package br.com.kleytonms.sysChamados.servicos;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -26,11 +27,13 @@ public class ChamadoService {
 		}
 	}
 
-	public List<Chamado> listaTodos() {
+	public List<ChamadoDTO> listaTodos() {
 		try {
 			List<Chamado> chamados = chamadoDAO.findAll();
+			List<ChamadoDTO> dtos = new ArrayList<ChamadoDTO>();
+			chamados.stream().forEachOrdered(chamado ->dtos.add(new ChamadoDTO(chamado)));
 			
-			return chamados;
+			return dtos;
 		} catch (DBException e) {
 			return null;
 		}
@@ -57,5 +60,23 @@ public class ChamadoService {
 
 	public ChamadoDTO listById(Long id) throws DBException {
 		return new ChamadoDTO(chamadoDAO.find(id));
+	}
+
+	public ChamadoDTO alteraStatus(Long id, String login, Status status) {
+
+		try {
+			Chamado chamado = chamadoDAO.find(id);
+			String usuario = chamado.getUsuarioCriador().getUsuario();
+			if(usuario.equals(login)) {
+				chamado.setStatus(status);
+				System.out.println("chegou");
+			}
+			
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }

@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -70,32 +69,18 @@ public class UsuarioREST {
 		}
 	}
 	
-	@DELETE
-	@Path("{id}")
-	@JWTTokenNeeded
-	public Response apaga(@PathParam(value = "id") Long id) {
-		
-		try {
-			usuarioService.apaga(id);
-		} catch (DBException e) {
-			return Response.status(500).build();
-		}
-		
-		return Response.ok().build();
-	}
-	
-	/*
-	 * private List<Usuario> carregaCollection(List<Usuario> usuarios, boolean
-	 * objCompleto){ if(objCompleto) { List<Usuario> list = new
-	 * ArrayList<Usuario>(); for (Usuario usuario : usuarios) { list.add(usuario); }
-	 * return list; }else { for (Usuario usuario : usuarios) {
-	 * usuario.setChamados(null);
-	 * 
-	 * } return usuarios; }
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
+//	@DELETE
+//	@Path("{id}")
+//	@JWTTokenNeeded
+//	public Response apaga(@PathParam(value = "id") Long id) {
+//		
+//		try {
+//			usuarioService.apaga(id);
+//		} catch (DBException e) {
+//			return Response.status(500).build();
+//		}
+//		
+//		return Response.ok().build();
+//	}
 	
 }

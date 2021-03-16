@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import br.com.kleytonms.sysChamados.entidades.Comentario;
+
 @JsonInclude(value = Include.NON_NULL)
 public class ComentarioDTO {
 	
@@ -29,6 +31,27 @@ private Long id;
 		this.detalhe = detalhe;
 		this.usuario = usuario;
 		this.inclusao = inclusao;
+	}
+	
+	public ComentarioDTO(Comentario comentario) {
+		
+		if(comentario.getId() != null) this.id = comentario.getId();
+		if(comentario.getId() != null) this.chamado = new ChamadoDTO(comentario.getChamado());
+		if(comentario.getDetalhe() != null) this.detalhe = comentario.getDetalhe();
+		if(comentario.getUsuario() != null) this.usuario = getUsuario();
+		if(comentario.getInclusao() != null) this.inclusao = getInclusao();
+	}
+	
+	public Comentario convertToEntity() {
+		Comentario comentario = new Comentario();
+		
+		if(this.id != null) comentario.setId(id);
+		if(this.chamado != null) comentario.setChamado(chamado.convertToEntity());
+		if(this.detalhe != null) comentario.setDetalhe(detalhe);
+		if(this.usuario != null) comentario.setUsuario(usuario.convertToEntity());
+		if(this.inclusao != null) comentario.setInclusao(inclusao);
+		
+		return comentario;
 	}
 
 	public Long getId() {

@@ -108,18 +108,18 @@ public class ChamadoDTO {
 	}
 	
 	public ChamadoDTO(Chamado chamado){
-		this.id = chamado.getId();
-		this.titulo = chamado.getTitulo();
-		this.descricao = chamado.getDescricao();
-		this.inclusao = chamado.getInclusao();
-		this.conclusao = chamado.getConclusao();
-		this.usuarioCriador = new UsuarioDTO(chamado.getUsuarioCriador());
-		this.status = chamado.getStatus();
+		
+		if(chamado.getId() != null) this.id = chamado.getId();
+		if(chamado.getTitulo() != null) this.titulo = chamado.getTitulo();
+		if(chamado.getDescricao() != null) this.descricao = chamado.getDescricao();
+		if(chamado.getInclusao() != null) this.inclusao = chamado.getInclusao();
+		if(chamado.getConclusao() != null) this.conclusao = chamado.getConclusao();
+		if(chamado.getUsuarioCriador() != null) this.usuarioCriador = new UsuarioDTO(chamado.getUsuarioCriador());
+		if(chamado.getStatus() != null) this.status = chamado.getStatus();
 	}
 	
 	public Chamado convertToEntity() {
 		Chamado chamado = new Chamado();
-		
 		if(this.id != null) chamado.setId(this.id);
 		if(this.titulo != null) chamado.setTitulo(this.titulo);
 		if(this.descricao != null) chamado.setDescricao(this.descricao);

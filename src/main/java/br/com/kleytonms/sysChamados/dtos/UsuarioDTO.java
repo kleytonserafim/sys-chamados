@@ -30,11 +30,11 @@ public class UsuarioDTO {
 
 	public UsuarioDTO(Usuario usuario) {
 
-		this.id = usuario.getId();
-		this.usuario = usuario.getUsuario();
-		this.nome = usuario.getNome();
-		this.email = usuario.getEmail();
-		// this.chamados = usuario.getChamados();
+		if(usuario.getId() != null)this.id = usuario.getId();
+		if(usuario.getUsuario() != null)this.usuario = usuario.getUsuario();
+		if(usuario.getNome() != null)this.nome = usuario.getNome();
+		if(usuario.getEmail() != null)this.email = usuario.getEmail();
+		//if(this.id != null)this.chamados = new ChamadoDTO( usuario.getChamados());
 
 	}
 
@@ -72,10 +72,10 @@ public class UsuarioDTO {
 	public Usuario convertToEntity() {
 		Usuario user = new Usuario();
 		if(this.id != null) user.setId(this.id);
-		user.setUsuario(this.usuario);
-		user.setSenha(UsuarioService.phpass.HashPassword(this.senha));
-		user.setNome(this.nome);
-		user.setEmail(this.email);
+		if(this.usuario != null)user.setUsuario(this.usuario);
+		if(this.senha != null)user.setSenha(UsuarioService.phpass.HashPassword(this.senha));
+		if(this.nome != null)user.setNome(this.nome);
+		if(this.email != null)user.setEmail(this.email);
 		return user;
 	} 
 
